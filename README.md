@@ -24,12 +24,48 @@ A Temporal Application is the code you write, comprised of:
 
 
 ## How to run
-* Install and Run Temporal server
+
+#### Install and Run Temporal server
 ```bash
-brew install temporal && temporal server start-dev
+# install temporal
+brew install temporal 
+
+# run temporal server
+temporal server start-dev
+
+# create namespace
+temporal operator namespace create backgroundcheck_namespace
 ```
 
+#### WEB UI address
+```
+http://localhost:8233/
+```
 
+#### Start workflow using CLI
+```bash
+# start workflow
+temporal workflow start \
+ --task-queue backgroundcheck-boilerplate-task-queue-local \
+ --type BackgroundCheck \
+ --input '"555-55-5555"' \
+ --namespace backgroundcheck_namespace \
+ --workflow-id backgroundcheck_workflow
+```
+
+#### List workflows using CLI
+```bash
+temporal workflow list \
+--namespace backgroundcheck_namespace
+```
+
+#### Save workflow history to file
+```bash
+temporal workflow show \
+ --workflow-id backgroundcheck_workflow \
+ --namespace backgroundcheck_namespace \
+ --output json > backgroundcheck_workflow_event_history.json
+```
 
 # Links
-* Source code of the tutorial: https://docs.temporal.io/dev-guide/go/project-setup#boilerplate-project
+* [Source code of the tutorial](https://docs.temporal.io/dev-guide/go/project-setup#boilerplate-project)
